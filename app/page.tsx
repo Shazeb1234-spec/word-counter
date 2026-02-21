@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Textarea } from "@/components/ui/textarea"
+import { Navigation2Icon, SearchAlertIcon, SearchCheckIcon, Trash2Icon } from "lucide-react"
 import { useState } from "react"
 
 export default function Page() {
@@ -45,7 +46,7 @@ export default function Page() {
 
         <div className="my-10 flex flex-col items-center">
 
-            <Card size="sm" className="mx-auto w-full max-w-sm">
+            <Card size="sm" className="mx-auto w-full max-w-md shadow-2xl">
                 <CardHeader>
                     <CardTitle>Word Counter</CardTitle>
                     <CardDescription>This program will count how many words you made</CardDescription>
@@ -54,11 +55,11 @@ export default function Page() {
                     <FieldGroup>
                         <Field>
                             <FieldLabel>Your Text </FieldLabel>
-                            <Textarea placeholder="Enter your text here..." defaultValue={text} value={text} onChange={(event) => setText(event.target.value)} />
+                            <Textarea id="text" placeholder="Enter your text here..."  value={text} onChange={(event) => setText(event.target.value)} />
                         </Field>
                         <Field className="grid grid-cols-2 gap-4">
-                            <Button onClick={analyzeText}>Analyze Text</Button>
-                            <Button onClick={() => setText("")} >Reset</Button>
+                            <Button onClick={analyzeText}> <Navigation2Icon/> Analyze Text</Button>
+                            <Button variant={"destructive"} onClick={() => setText("")}  > <Trash2Icon/> Reset</Button>
                         </Field>
                         <Field>
                             <FieldLabel>Word Count: {wordCount} </FieldLabel>
