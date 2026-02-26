@@ -16,31 +16,63 @@ export default function Page() {
     const [characterCount, setCharacterCount] = useState<number>(0)
     const [sentenceCount, setSentenceCount] = useState<number>(0)
     const [vowelCount, setVowelCount] = useState<number>(0)
+    const [longestWord, setLongestWord] = useState<string>("")
+
+
+    function getLongestWord(str: string | null | undefined): string {
+        if (str ) {
+            const words = str.split(" ")
+            let maxCount = 0
+            let maxCountIndex = null
+
+
+            for (let i = 0; i < words.length; i++) {
+                if (words[i].length > maxCount) {
+                    maxCount = words[i].length
+                    maxCountIndex = i
+                }
+            }
+            let word= ""
+            if (maxCountIndex != null) {
+                 word = words[maxCountIndex]
+            }
+            else {
+                word =""
+            }
+            return word
+        }
+
+        else {
+            return ""
+        }
+
+
+    }
 
     function countVowel(str: string) {
         const vowels = new Set(["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"])
         let count = 0
 
-        for(let i = 0; i < str.length; i++) {
+        for (let i = 0; i < str.length; i++) {
             if (vowels.has(str.charAt(i))) {
-                count+=1 
+                count += 1
 
             }
 
         }
-            return count
+        return count
 
     }
-    
+
     function analyzeText() {
-        setTextA(text) 
+        setTextA(text)
         setCharacterCount(text.length)
         setWordCount(text.split(" ").length)
         setSentenceCount(text.split(/[.?!]+/).filter(Boolean).length)
         setVowelCount(countVowel(textA))
+        setLongestWord(getLongestWord(textA))
     }
 
-    
 
     return (
 
@@ -55,11 +87,11 @@ export default function Page() {
                     <FieldGroup>
                         <Field>
                             <FieldLabel>Your Text </FieldLabel>
-                            <Textarea id="text" placeholder="Enter your text here..."  value={text} onChange={(event) => setText(event.target.value)} />
+                            <Textarea id="text" placeholder="Enter your text here..." maxLength={100} value={text} onChange={(event) => setText(event.target.value)} />
                         </Field>
                         <Field className="grid grid-cols-2 gap-4">
-                            <Button onClick={analyzeText}> <Navigation2Icon/> Analyze Text</Button>
-                            <Button variant={"destructive"} onClick={() => setText("")}  > <Trash2Icon/> Reset</Button>
+                            <Button onClick={analyzeText}> <div className="hover:rotate-45"/><Navigation2Icon/> Analyze Text</Button>
+                            <Button variant={"destructive"} onClick={() => setText("")}  > <Trash2Icon /> Reset</Button>
                         </Field>
                         <Field>
                             <FieldLabel>Word Count: {wordCount} </FieldLabel>
@@ -67,6 +99,7 @@ export default function Page() {
                             <FieldLabel>Sentence count: {sentenceCount} </FieldLabel>
                             <FieldLabel>Vowel count: {vowelCount} </FieldLabel>
                             <FieldLabel>You entered sentence: {textA} </FieldLabel>
+                            <FieldLabel>You Longest Word: {longestWord}</FieldLabel>
 
                         </Field>
                     </FieldGroup>
